@@ -19,7 +19,7 @@ def main():
     load_dotenv()
     api_key = os.getenv('NASA_API_KEY')
     parser = argparse.ArgumentParser(description='Determines how many photos fetch')
-    parser.add_argument('-c', '--count', help='Print number of photos to fetch')
+    parser.add_argument('-c', '--count', default=1, help='Print number of photos to fetch')
     args = parser.parse_args()
     fetch_apod_images(api_key, int(args.count))
 
