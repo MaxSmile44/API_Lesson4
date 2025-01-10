@@ -9,8 +9,8 @@ import argparse
 SECONDS_PER_MINUTE = 60
 
 def get_all_files(directory):
-    for dirpath, dirnames, filenames in os.walk(directory):
-        return filenames
+    filenames = os.listdir(directory)
+    return filenames
 
 def tg_bot_send(tg_token, path):
     bot = telegram.Bot(token=tg_token)
@@ -32,7 +32,6 @@ def main():
         random.shuffle(photo_list)
         for filename in photo_list:
             path = f'{directory}{filename}'
-            print(path)
             try:
                 tg_bot_send(tg_token, path)
             except Exception:
