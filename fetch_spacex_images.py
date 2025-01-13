@@ -8,15 +8,15 @@ def fetch_spacex_last_launch(id):
     response.raise_for_status()
     if not id:
         id = max([i['flight_number'] for i in response.json() if i['links']['flickr']['original']])
-    for foto_list in response.json():
-        if foto_list['flight_number'] == id:
-            for index, foto in enumerate(foto_list['links']['flickr']['original']):
-                extension = utils.get_extension(foto)
-                utils.save_file(foto, './images/', f'spacex_{index+1}{extension}')
+    for photos in response.json():
+        if photos['flight_number'] == id:
+            for index, photo in enumerate(photos['links']['flickr']['original'], start=1):
+                extension = utils.get_extension(photo)
+                utils.save_file(photo, './images/', f'spacex_{index}{extension}')
 
 def main():
-    parser = argparse.ArgumentParser(description='Searches for photos by flight id')
-    parser.add_argument('-i', '--id', default=0, help='Print id of the launch you want to fetch')
+    parser = argparse.ArgumentParser(description='Searches for photos by flight id from NASA')
+    parser.add_argument('-i', '--id', default=0, help='id of the launch you want to fetch')
     args = parser.parse_args()
     fetch_spacex_last_launch(int(args.id))
 

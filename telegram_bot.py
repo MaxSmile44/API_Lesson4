@@ -23,14 +23,14 @@ def main():
     tg_token = os.getenv('TG_TOKEN')
     directory = './images/'
 
-    parser = argparse.ArgumentParser(description='Determines how many hours a photo will be posted')
-    parser.add_argument('-t', '--time', default=4, help='Print number of hours')
+    parser = argparse.ArgumentParser(description='Indicate how often photos will be posted in telegram channel')
+    parser.add_argument('-t', '--time', default=4, help='number of hours')
     args = parser.parse_args()
 
     while True:
-        photo_list = get_all_files(directory)
-        random.shuffle(photo_list)
-        for filename in photo_list:
+        photos = get_all_files(directory)
+        random.shuffle(photos)
+        for filename in photos:
             path = f'{directory}{filename}'
             try:
                 tg_bot_send(tg_token, path)
