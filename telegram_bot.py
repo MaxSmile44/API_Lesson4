@@ -8,35 +8,31 @@ import argparse
 
 SECONDS_PER_MINUTE = 60
 
-def get_all_files(directory):
-    filenames = os.listdir(directory)
-    return filenames
 
-def tg_bot_send(tg_token, path):
+def tg_bot_send(tg_token, chat_id, path):
     bot = telegram.Bot(token=tg_token)
-    updates = bot.get_updates()
-    chat_id = updates[0]['my_chat_member']['chat']['id']
     bot.send_photo(chat_id=chat_id, photo=open(path, 'rb'))
 
 def main():
     load_dotenv()
     tg_token = os.getenv('TG_TOKEN')
+    chat_id = os.getenv('CHAT_ID')
     directory = './images/'
 
     parser = argparse.ArgumentParser(description='Indicate how often photos will be posted in telegram channel')
-    parser.add_argument('-t', '--time', default=4, help='number of hours')
+    parser.add_argument('-t', '--time', default=4, type=int, help='number of hours')
     args = parser.parse_args()
 
     while True:
-        photos = get_all_files(directory)
+        photos = os.listdir(directory)
         random.shuffle(photos)
         for filename in photos:
             path = f'{directory}{filename}'
             try:
-                tg_bot_send(tg_token, path)
+                tg_bot_send(tg_token, chat_id, path)
             except Exception:
                 continue
-            time.sleep(int(args.time) * SECONDS_PER_MINUTE)
+            time.sleep(args.time * SECONDS_PER_MINUTE)
 
 
 if __name__ == '__main__':
