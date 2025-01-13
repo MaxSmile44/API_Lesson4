@@ -11,9 +11,8 @@ SECONDS_PER_MINUTE = 60
 
 def tg_bot_send(tg_token, chat_id, path):
     bot = telegram.Bot(token=tg_token)
-    with open(path, "rb") as f:
-        photo = f.read()
-    bot.send_photo(chat_id=chat_id, photo=photo)
+    with open(path, "rb") as photo:
+        bot.send_photo(chat_id=chat_id, photo=photo)
 
 def main():
     load_dotenv()
@@ -32,7 +31,7 @@ def main():
             path = f'{directory}{filename}'
             try:
                 tg_bot_send(tg_token, chat_id, path)
-            except Exception:
+            except telegram.error.NetworkError:
                 continue
             time.sleep(args.time * SECONDS_PER_MINUTE)
 
