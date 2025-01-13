@@ -1,3 +1,4 @@
+import urllib
 import utils
 import requests
 from dotenv import load_dotenv
@@ -11,8 +12,9 @@ def fetch_epic_images(api_key):
     response.raise_for_status()
     for index, photos in enumerate(response.json(), start=1):
         url = f"https://api.nasa.gov/EPIC/archive/natural/{photos['date'][:10].replace('-', '/')}/png/{photos['image']}.png"
-        photo = requests.get(url, params=payload)
-        utils.save_file(photo.url, './images/', f'epic_{index}.png')
+        encoded_params = urllib.parse.urlencode(payload)
+        photo = f"{url}?{encoded_params}"
+        utils.save_file(photo, './images/', f'epic_{index}.png')
 
 def main():
     load_dotenv()
