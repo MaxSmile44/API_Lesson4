@@ -16,9 +16,9 @@ def fetch_spacex_last_launch(id):
 
 def main():
     parser = argparse.ArgumentParser(description='Searches for photos by flight id from NASA')
-    parser.add_argument('-i', '--id', default=0, help='id of the launch you want to fetch')
+    parser.add_argument('-i', '--id', default=0, type=int, help='id of the launch you want to fetch')
     args = parser.parse_args()
-    fetch_spacex_last_launch(int(args.id))
+    fetch_spacex_last_launch(args.id)
 
 
 if __name__ == '__main__':

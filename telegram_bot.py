@@ -17,7 +17,7 @@ def tg_bot_send(tg_token, chat_id, path):
 def main():
     load_dotenv()
     tg_token = os.getenv('TG_TOKEN')
-    chat_id = os.getenv('CHAT_ID')
+    chat_id = os.getenv('TG_CHAT_ID')
     directory = './images/'
 
     parser = argparse.ArgumentParser(description='Indicate how often photos will be posted in telegram channel')
