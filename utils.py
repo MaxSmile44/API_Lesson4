@@ -4,7 +4,7 @@ import urllib
 import requests
 
 
-def save_file(url, path, filename, params={}):
+def save_file(url, path, filename, params=None):
     response = requests.get(url, params=params)
     response.raise_for_status()
     Path(path).mkdir(parents=True, exist_ok=True)
